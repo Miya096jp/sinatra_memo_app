@@ -1,0 +1,225 @@
+/*
+////////////////////////////////////////
+reset.css を読み込んで全てのスタイルをなくす
+////////////////////////////////////////
+*/
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*
+////////////////////////////////////////
+reset.css では足りない初期化を追加
+////////////////////////////////////////
+*/
+
+/* 全てに box-sizing: border-box; を適用 */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+/* 画像に関する初期設定 */
+img {
+  /* 大きい画像がはみ出さないように */
+  max-width: 100%;
+  /* 画像周りの無駄なスペースができないように */
+  vertical-align: bottom;
+}
+
+[data-whatinput="mouse"] *:focus,
+[data-whatinput="touch"] *:focus {
+  outline: none;
+}
+
+input, textarea {
+  font-family: inherit;
+}
+
+/*
+////////////////////////////////////////
+初期設定
+////////////////////////////////////////
+*/
+
+body {
+  padding: 32px 0;
+  color: #56564f;
+  font-family: sans-serif;
+}
+
+article {
+  width: 640px;
+  margin: 0 auto;
+}
+
+/*
+////////////////////////////////////////
+以下に自分なりのCSSを書いて読みやすくする
+////////////////////////////////////////
+*/
+
+h1 {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.header {
+  display: inline-block;
+  text-align: left;
+  font-size: 20px;
+}
+
+body {
+  font-family: monaco;
+  background-color: #fafafa;
+  padding: 20px;
+}
+
+a {
+ color: black;
+}
+
+.main-content {
+  color: #333;
+  padding-top: 20px;
+  border-top: 1px solid #cccccc;
+  width: 680px;
+  padding: 10px;
+}
+
+h2 {
+  color: #333;
+  font-size: 18px;
+	margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+label {
+width: 104px;
+display: inline-block;
+text-align: right;
+vertical-align: middle;
+padding-right: 8px;
+}
+
+
+input[type="text"],
+textarea {
+  width: calc(100% - 130px);
+	padding: .5em;
+	border: solid 1px #aaa;
+	border-radius: 5px;
+	outline-color: #9dbbff;
+	vertical-align: middle;
+}
+
+.form-items__item {
+  margin-bottom: 16px;
+}
+
+textarea {
+  height: 8em;
+}
+
+.memo-list li {
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.memo-list a {
+  text-decoration: none;
+	color: #333;
+}
+
+.memo-list a:hover {
+  text-decoration: underline;
+}
+
+.title {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.article {
+  line-height: 1.5em;
+}
+
+.btn_new {
+  text-align: right;
+  margin-top: 20px;
+  margin-right: 15px;
+}
+
+.btn_show {
+  display: flex;
+  gap: 10px; 
+	margin-top: 20px;
+}
+
+.btn_update {
+  text-align: right;
+  margin-top: 20px;
+  margin-right: 15px;
+}
+
+.btn {
+  background-color: #c0c0c0;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn:hover {
+  background-color: #333333;
+}

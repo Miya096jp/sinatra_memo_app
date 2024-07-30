@@ -1,0 +1,14 @@
+<h2>MEMO</h2>
+
+<p class="title"><%= h(@data["title"]) %>:</p>
+<p class="article"><%= h(@data["body"]) %></p>
+
+<div class="btn_show">
+  <a href="/edit/<%= h(@data["id"]) %>" class="btn">Update</a>
+
+  <form method="POST" action="/<%= h(@data["id"]) %>">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete" class="btn">
+</div>
+
+</form>
