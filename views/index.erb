@@ -1,0 +1,11 @@
+<h2>MEMO</h1>
+<ul class="memo-list">
+  <% @dataset.each do |data| %>
+    <li class="memo">
+      <a href="/<%= h(data['id']) %>"><%= h(data['title']) %></a>
+    </li>
+  <% end %>
+</ul>
+<div class="button">
+  <a href="/new" class="btn">Create New Memo</a>
+</div>
