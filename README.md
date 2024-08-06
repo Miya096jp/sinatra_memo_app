@@ -35,6 +35,11 @@ inherit_gem:
     - "config/rubocop.yml"
 ```
 
+`sinatra_memo_app`ディレクトリ直下に`data.json`を作成
+```
+$ touch data.json
+```
+
 ## アプリの起動
 bundle execを実行
 ```
