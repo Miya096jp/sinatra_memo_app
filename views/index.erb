@@ -1,8 +1,8 @@
-<h2>MEMO</h1>
+<h1>MEMO</h1>
 <ul class="memo-list">
-  <% @dataset.each do |data| %>
+  <% @contents["memos"].each do |key, value| %>
     <li class="memo">
-      <a href="/<%= h(data['id']) %>"><%= h(data['title']) %></a>
+      <a href="/<%= value['id'] %>"><%= h(value['title']) %></a>
     </li>
   <% end %>
 </ul>

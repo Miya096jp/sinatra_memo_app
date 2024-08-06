@@ -1,14 +1,14 @@
 <h2>Add new</h2>
-<form method="post" action="/<%= h(@data["id"]) %>">
+<form method="post" action="/<%= @content["id"] %>">
   <input type="hidden" name="_method" value="patch">
   <div class="form-items__item">
     <label>タイトル</label>
-    <input type="text" name="title" value="<%= h(@data["title"]) %>">
+    <input type="text" name="title" value="<%= h(@content["title"]) %>">
   </div>
 
   <div class="form-items__item">
     <label>本文</label>
-    <textarea name="body"><%= h(@data["body"]) %></textarea>
+    <textarea name="body"><%= h(@content["body"]) %></textarea>
   </div>
 
   <div class="btn_update">
