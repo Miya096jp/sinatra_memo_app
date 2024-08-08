@@ -6,6 +6,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 require_relative 'memo'
+require 'webrick'
 
 before do
   @memo = Memo.new
@@ -13,7 +14,7 @@ end
 
 helpers do
   def h(text)
-    Rack::Utils.escape_html(text)
+    WEBrick::HTMLUtils.escape(text)
   end
 end
 
@@ -22,7 +23,7 @@ not_found do
 end
 
 get '/' do
-  @dataset = @memo.read
+  @contents = @memo.read
   erb :index
 end
 
@@ -31,13 +32,13 @@ get '/new' do
 end
 
 post '/new' do
-  @memo.write(h(params[:title]), h(params[:body]))
+  @memo.write(params[:title], params[:body])
   redirect '/'
 end
 
 get '/:id' do
-  @data = @memo.show(params[:id])
-  halt 404 unless @data
+  @content = @memo.fetch(params[:id])
+  halt 404 unless @content
   erb :show
 end
 
@@ -47,11 +48,11 @@ delete '/:id' do
 end
 
 get '/edit/:id' do
-  @data = @memo.show(params[:id])
+  @content = @memo.fetch(params[:id])
   erb :edit
 end
 
 patch '/:id' do
-  @memo.update(h(params[:id]), h(params[:title]), h(params[:body]))
+  @memo.update(params[:id], params[:title], params[:body])
   redirect '/'
 end
