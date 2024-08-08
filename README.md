@@ -35,9 +35,10 @@ inherit_gem:
     - "config/rubocop.yml"
 ```
 
-`sinatra_memo_app`ディレクトリ直下に`data.json`を作成
+`sinatra_memo_app`ディレクトリ直下に`data.json`と`highest_id.json`を作成
 ```
 $ touch data.json
+$ touch highest_id.json
 ```
 
 ## アプリの起動
