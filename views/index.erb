@@ -1,8 +1,8 @@
-<h1>MEMO</h1>
+<h2>MEMO</h2>
 <ul class="memo-list">
-  <% @contents["memos"].each do |key, value| %>
+  <% @memos.each do |key, value| %>
     <li class="memo">
-      <a href="/<%= value['id'] %>"><%= h(value['title']) %></a>
+      <a href="/<%= key.to_i %>"><%= h(value['title']) %></a>
     </li>
   <% end %>
 </ul>

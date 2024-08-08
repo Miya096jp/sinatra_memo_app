@@ -5,15 +5,10 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 require_relative 'memo'
-require 'webrick'
-
-before do
-  @memo = Memo.new
-end
 
 helpers do
   def h(text)
-    WEBrick::HTMLUtils.escape(text)
+    Rack::Utils.escape_html(text)
   end
 end
 
@@ -22,7 +17,7 @@ not_found do
 end
 
 get '/' do
-  @contents = @memo.read
+  @memos = MemoDB.read
   erb :index
 end
 
@@ -31,27 +26,28 @@ get '/new' do
 end
 
 post '/new' do
-  @memo.write(params[:title], params[:body])
+  MemoDB.write(params[:title], params[:body])
   redirect '/'
 end
 
 get '/:id' do
-  @content = @memo.fetch(params[:id])
-  halt 404 unless @content
+  @memo = MemoDB.fetch(params[:id])
+  halt 404 unless @memo
   erb :show
 end
 
 delete '/:id' do
-  @memo.delete(params[:id])
+  MemoDB.delete(params[:id])
   redirect '/'
 end
 
 get '/edit/:id' do
-  @content = @memo.fetch(params[:id])
+  @memo = MemoDB.fetch(params[:id])
+  halt 404 unless @memo
   erb :edit
 end
 
 patch '/:id' do
-  @memo.update(params[:id], params[:title], params[:body])
+  MemoDB.update(params[:id], params[:title], params[:body])
   redirect '/'
 end

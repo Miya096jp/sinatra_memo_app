@@ -2,66 +2,49 @@
 
 require 'json'
 
-class Memo
+class MemoDB
   JSON_FILE = 'data.json'
   HIGHEST_ID = 'highest_id.json'
 
-  def read
-    content = File.read(JSON_FILE)
-    content.empty? ? {} : JSON.parse(content)
-  end
+  class << self
+    def read
+      file_content = File.read(JSON_FILE)
+      file_content.empty? ? {} : JSON.parse(file_content)
+    end
 
-  def write(title, body)
-    all_memos = read
-    id = create_new_id
-    all_memos[id['highest_id'].to_s] = { 'title' => title, 'body' => body }
-    File.write(JSON_FILE, JSON.generate(all_memos))
-  end
+    def write(title, body)
+      all_memos = read
+      new_id = create_new_id
+      all_memos[new_id.to_s] = { 'title' => title, 'body' => body }
+      File.write(JSON_FILE, JSON.generate(all_memos))
+    end
 
-  def create_new_id
-    current_id = File.read(HIGHEST_ID)
-    current_id = current_id.empty? ? { 'highest_id' => nil } : JSON.parse(current_id)
-    highest_id = current_id['highest_id'].nil? ? 1 : current_id['highest_id'] += 1
-    current_id['highest_id'] = highest_id
-    File.write(HIGHEST_ID, JSON.generate(current_id))
-    current_id
-  end
+    def fetch(id)
+      all_memos = read
+      all_memos[id.to_s]
+    end
 
-  # def read
-  #   content = File.read(JSON_FILE)
-  #   content.empty? ? { 'highest_id' => nil, 'memos' => {} } : JSON.parse(content)
-  # end
+    def update(id, title, body)
+      all_memos = read
+      all_memos[id.to_s] = { 'title' => title, 'body' => body }
+      File.write(JSON_FILE, JSON.generate(all_memos))
+    end
 
-  # def write(title, body)
-  #   all_memos = read
-  #   all_memos['highest_id'] = create_new_id
-  #   all_memos['memos'][create_new_id] = { 'id' => create_new_id, 'title' => title, 'body' => body }
-  #   File.write(JSON_FILE, JSON.generate(all_memos))
-  # end
+    def delete(id)
+      all_memos = read
+      all_memos.delete(id.to_s)
+      File.write(JSON_FILE, JSON.generate(all_memos))
+    end
 
-  # def create_new_id
-  #   all_memos = read
-  #   !all_memos['highest_id'] ? 1 : all_memos['highest_id'] += 1
-  # end
+    private
 
-  def fetch(id)
-    all_memos = read
-    id_str = id.to_s
-    all_memos['memos'][id_str]
-  end
-
-  def update(id, title, body)
-    all_memos = read
-    id_str = id.to_s
-    all_memos['memos'][id_str]['title'] = title
-    all_memos['memos'][id_str]['body'] = body
-    File.write(JSON_FILE, JSON.generate(all_memos))
-  end
-
-  def delete(id)
-    all_memos = read
-    id_str = id.to_s
-    all_memos['memos'].delete(id_str)
-    File.write(JSON_FILE, JSON.generate(all_memos))
+    def create_new_id
+      file_content = File.read(HIGHEST_ID)
+      parsed_hash = file_content.empty? ? { 'id' => nil } : JSON.parse(file_content)
+      new_id = parsed_hash['id'].nil? ? 1 : parsed_hash['id'] + 1
+      hash_to_save = { 'id' => new_id }
+      File.write(HIGHEST_ID, JSON.generate(hash_to_save))
+      new_id
+    end
   end
 end

@@ -1,13 +1,13 @@
 <h2>MEMO</h2>
 
-<p class="title"><%= h(@content["title"]) %>:</p>
-<p class="article"><%= h(@content["body"]) %></p>
+<p class="title"><%= h(@memo["title"]) %>:</p>
+<p class="article"><%= h(@memo["body"]) %></p>
 
 <div class="btn_show">
-  <a href="/edit/<%= @content["id"] %>" class="btn">Update</a>
+  <a href="/edit/<%= params[:id] %>" class="btn">Update</a>
 
-  <form method="POST" action="/<%= @content["id"] %>">
+  <form method="POST" action="/<%= params[:id] %>">
     <input type="hidden" name="_method" value="DELETE">
     <input type="submit" value="Delete" class="btn">
   </form>
-</div>
+<%# </div> %>
