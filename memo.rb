@@ -40,10 +40,8 @@ class MemoDB
 
     def create_new_id
       file_content = File.read(HIGHEST_ID)
-      parsed_hash = file_content.empty? ? { 'id' => nil } : JSON.parse(file_content)
-      new_id = parsed_hash['id'].nil? ? 1 : parsed_hash['id'] + 1
-      hash_to_save = { 'id' => new_id }
-      File.write(HIGHEST_ID, JSON.generate(hash_to_save))
+      new_id = file_content.empty? ? 1 : JSON.parse(file_content) + 1
+      File.write(HIGHEST_ID, JSON.generate(new_id))
       new_id
     end
   end
