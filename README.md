@@ -69,6 +69,7 @@ $ bundle install
 - RuboCop
 - ERB Lint
 - rackup
+- ruby_pg
 
 Ruby 3.0.0以降を使う場合、webrick gemをインストール
 ```
