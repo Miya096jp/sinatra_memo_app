@@ -12,3 +12,5 @@ end
 gem 'erb_lint', require: false
 
 gem 'rackup', '~> 2.1'
+
+gem 'pg', '~> 1.5', '>= 1.5.4'

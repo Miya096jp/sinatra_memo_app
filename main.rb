@@ -3,7 +3,7 @@
 require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/reloader'
-require 'json'
+require 'pg'
 require_relative 'memo'
 
 helpers do

@@ -1,22 +1,21 @@
 # frozen_string_literal: true
 
-require 'json'
-
 class MemoDB
-  JSON_FILE = 'data.json'
-  HIGHEST_ID = 'highest_id.json'
+  MEMO_DB = PG.connect(dbname: 'memo_db')
 
   class << self
     def read
-      file_content = File.read(JSON_FILE)
-      file_content.empty? ? {} : JSON.parse(file_content)
+      memos = MEMO_DB.exec('SELECT * FROM memos')
+      memos.each.with_object({}) do |memo, memos_hash|
+        memos_hash[memo['id']] = { 'title' => memo['title'], 'body' => memo['body'] }
+      end
     end
 
     def write(title, body)
-      all_memos = read
-      new_id = create_new_id
-      all_memos[new_id.to_s] = { 'title' => title, 'body' => body }
-      File.write(JSON_FILE, JSON.generate(all_memos))
+      MEMO_DB.exec_params(
+        'INSERT INTO memos(title, body) VALUES($1, $2)',
+        [title, body]
+      )
     end
 
     def fetch(id)
@@ -25,24 +24,14 @@ class MemoDB
     end
 
     def update(id, title, body)
-      all_memos = read
-      all_memos[id.to_s] = { 'title' => title, 'body' => body }
-      File.write(JSON_FILE, JSON.generate(all_memos))
+      MEMO_DB.exec_params(
+        'UPDATE memos SET title = $1, body = $2 WHERE id = $3',
+        [title, body, id]
+      )
     end
 
     def delete(id)
-      all_memos = read
-      all_memos.delete(id.to_s)
-      File.write(JSON_FILE, JSON.generate(all_memos))
-    end
-
-    private
-
-    def create_new_id
-      file_content = File.read(HIGHEST_ID)
-      new_id = file_content.empty? ? 1 : JSON.parse(file_content) + 1
-      File.write(HIGHEST_ID, JSON.generate(new_id))
-      new_id
+      MEMO_DB.exec('DELETE FROM memos WHERE id = $1', [id])
     end
   end
 end
