@@ -23,7 +23,7 @@ CREATE ROLE
 postgres=# \q
 ```
 
-作成したユーザーでログインn
+作成したユーザーでログイン
 ```
 $ psql -U <username> postgres
 ```
