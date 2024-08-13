@@ -2,46 +2,47 @@
 
 require 'json'
 
-class Memo
-  def initialize
-    @json_file = 'data.json'
-  end
+class MemoDB
+  JSON_FILE = 'data.json'
+  HIGHEST_ID = 'highest_id.json'
 
-  def read
-    content = File.read(@json_file)
-    content.empty? ? [] : JSON.parse(content)
-  end
+  class << self
+    def read
+      file_content = File.read(JSON_FILE)
+      file_content.empty? ? {} : JSON.parse(file_content)
+    end
 
-  def write(title, body)
-    all_memos = read
-    new_memo = { 'id' => create_new_id, 'title' => title, 'body' => body }
-    all_memos << new_memo
-    File.write(@json_file, JSON.generate(all_memos))
-  end
+    def write(title, body)
+      all_memos = read
+      new_id = create_new_id
+      all_memos[new_id.to_s] = { 'title' => title, 'body' => body }
+      File.write(JSON_FILE, JSON.generate(all_memos))
+    end
 
-  def create_new_id
-    all_memos = read
-    all_memos.empty? ? 1 : all_memos.max_by { |memo| memo['id'] }['id'] + 1
-  end
+    def fetch(id)
+      all_memos = read
+      all_memos[id.to_s]
+    end
 
-  def show(id)
-    all_memos = read
-    all_memos.find { |memo| memo['id'] == id.to_i }
-  end
+    def update(id, title, body)
+      all_memos = read
+      all_memos[id.to_s] = { 'title' => title, 'body' => body }
+      File.write(JSON_FILE, JSON.generate(all_memos))
+    end
 
-  def update(id, title, body)
-    all_memos = read
-    idx = all_memos.index { |memo| memo['id'] == id.to_i }
-    all_memos[idx]['title'] = title
-    all_memos[idx]['body'] = body
-    File.write(@json_file, JSON.generate(all_memos))
-    all_memos
-  end
+    def delete(id)
+      all_memos = read
+      all_memos.delete(id.to_s)
+      File.write(JSON_FILE, JSON.generate(all_memos))
+    end
 
-  def delete(id)
-    all_memos = read
-    idx = all_memos.index { |memo| memo['id'] == id.to_i }
-    all_memos.delete_at(idx)
-    File.write(@json_file, JSON.generate(all_memos))
+    private
+
+    def create_new_id
+      file_content = File.read(HIGHEST_ID)
+      new_id = file_content.empty? ? 1 : JSON.parse(file_content) + 1
+      File.write(HIGHEST_ID, JSON.generate(new_id))
+      new_id
+    end
   end
 end
