@@ -7,7 +7,7 @@
 ## データベースの準備
 事前にPostgreSQLをインストールしてください
 
-ログインユーザーでログイン
+PostgreSQLにログインユーザーでログイン
 ```
 $ psql -U${USER} postgres
 ```
