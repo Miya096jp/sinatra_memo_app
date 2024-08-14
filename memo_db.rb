@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 class MemoDB
-  MEMO_DB = PG.connect(dbname: 'memo_db')
+  CONN = PG.connect(dbname: 'memo_db')
 
   class << self
     def read
-      memos = MEMO_DB.exec('SELECT * FROM memos')
-      memos.each.with_object({}) do |memo, memos_hash|
-        memos_hash[memo['id']] = { 'title' => memo['title'], 'body' => memo['body'] }
-      end
+      memos = CONN.exec('SELECT * FROM memos ORDER BY id' )
+      memos.map do |memo|
+        [memo['id'], { 'title' => memo['title'], 'body' => memo['body'] }]
+      end.to_h
     end
 
     def write(title, body)
-      MEMO_DB.exec_params(
+      CONN.exec_params(
         'INSERT INTO memos(title, body) VALUES($1, $2)',
         [title, body]
       )
@@ -20,18 +20,18 @@ class MemoDB
 
     def fetch(id)
       all_memos = read
-      all_memos[id.to_s]
+      all_memos[id]
     end
 
     def update(id, title, body)
-      MEMO_DB.exec_params(
+      CONN.exec_params(
         'UPDATE memos SET title = $1, body = $2 WHERE id = $3',
         [title, body, id]
       )
     end
 
     def delete(id)
-      MEMO_DB.exec('DELETE FROM memos WHERE id = $1', [id])
+      CONN.exec('DELETE FROM memos WHERE id = $1', [id])
     end
   end
 end

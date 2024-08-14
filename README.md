@@ -41,6 +41,50 @@ postgres=# \c memo_db
 
 memosテーブルの作成
 ```
+memo_db=# CREATE TABLE memos (
+memo_db(# id SERIAL PRIMARY KEY,
+memo_db(# title VARCHAR(255) NOT NULL,
+memo_db(# body TEXT NOT NULL,
+memo_db(# );
+```
+
+## データベースの準備
+事前にPostgreSQLをインストールしてください
+
+PostgreSQLにログインユーザーでログイン
+```
+$ psql -U${USER} postgres
+```
+
+DB操作用に任意のユーザを作成
+```
+postgres=# create user <username> with SUPERUSER;
+CREATE ROLE
+```
+
+一旦ログアウト
+```
+postgres=# \q
+```
+
+作成したユーザーでログイン
+```
+$ psql -U <username> postgres
+```
+
+データベースmemo_dbを作成
+
+```
+postgres# create databese memo_db owner=<username>;
+```
+
+データベースの切り替え
+```
+postgres=# \c memo_db
+```
+
+memosテーブルの作成
+```
 memo_db=# CREATE TABLE memos (id SERIAL PRIMARY KEY, title VARCHAR(255) NOT NULL, body TEXT NOT NULL,);
 ```
 ddd
@@ -92,10 +136,3 @@ bundel exec ruby main.rb
 ```
 http://localhost:4567
 ```
-
-
-
-
-
-
-

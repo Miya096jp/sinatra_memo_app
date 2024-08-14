@@ -4,7 +4,7 @@ require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
-require_relative 'memo'
+require_relative 'memo_db'
 
 helpers do
   def h(text)
