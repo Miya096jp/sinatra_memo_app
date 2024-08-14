@@ -5,7 +5,7 @@ class MemoDB
 
   class << self
     def read
-      memos = CONN.exec('SELECT * FROM memos ORDER BY id' )
+      memos = CONN.exec('SELECT * FROM memos ORDER BY id')
       memos.map do |memo|
         [memo['id'], { 'title' => memo['title'], 'body' => memo['body'] }]
       end.to_h
