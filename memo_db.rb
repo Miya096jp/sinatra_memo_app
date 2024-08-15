@@ -5,10 +5,7 @@ class MemoDB
 
   class << self
     def read
-      memos = CONN.exec('SELECT * FROM memos ORDER BY id')
-      memos.map do |memo|
-        [memo['id'], { 'title' => memo['title'], 'body' => memo['body'] }]
-      end.to_h
+      CONN.exec('SELECT * FROM memos ORDER BY id')
     end
 
     def write(title, body)
@@ -19,8 +16,10 @@ class MemoDB
     end
 
     def fetch(id)
-      all_memos = read
-      all_memos[id]
+      CONN.exec_params(
+        'SELECT * FROM memos WHERE id = $1',
+        [id]
+      ).first
     end
 
     def update(id, title, body)
