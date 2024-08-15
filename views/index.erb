@@ -1,8 +1,8 @@
 <h2>MEMO</h2>
 <ul class="memo-list">
-  <% @memos.each do |id, memo| %>
+  <% @memos.each do |memo| %>
     <li class="memo">
-      <a href="/<%= id.to_i %>"><%= h(memo['title']) %></a>
+      <a href="/<%= memo['id'] %>"><%= h(memo['title']) %></a>
     </li>
   <% end %>
 </ul>

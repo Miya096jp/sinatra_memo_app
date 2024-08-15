@@ -41,11 +41,7 @@ postgres=# \c memo_db
 
 memosテーブルの作成
 ```
-memo_db=# CREATE TABLE memos (
-memo_db(# id SERIAL PRIMARY KEY,
-memo_db(# title VARCHAR(255) NOT NULL,
-memo_db(# body TEXT NOT NULL,
-memo_db(# );
+memo_db=# CREATE TABLE memos (id SERIAL PRIMARY KEY, title VARCHAR(255) NOT NULL, body TEXT NOT NULL,);
 ```
 
 ## データベースの準備
@@ -87,7 +83,7 @@ memosテーブルの作成
 ```
 memo_db=# CREATE TABLE memos (id SERIAL PRIMARY KEY, title VARCHAR(255) NOT NULL, body TEXT NOT NULL,);
 ```
-ddd
+
 ## インストール方法
 次のURLでアプリをクローン
 ```
