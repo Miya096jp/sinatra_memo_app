@@ -30,7 +30,7 @@ class MemoDB
     end
 
     def delete(id)
-      CONN.exec('DELETE FROM memos WHERE id = $1', [id])
+      CONN.exec_params('DELETE FROM memos WHERE id = $1', [id])
     end
   end
 end
