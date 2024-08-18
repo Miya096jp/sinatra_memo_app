@@ -28,7 +28,6 @@ postgres=# \q
 $ psql -U <username> postgres
 ```
 
-
 データベースmemo_dbを作成
 
 ```
@@ -44,10 +43,7 @@ memosテーブルの作成
 ```
 memo_db=# CREATE TABLE memos (id SERIAL PRIMARY KEY, title VARCHAR(255) NOT NULL, body TEXT NOT NULL,);
 ```
-
-
-
-
+ddd
 ## インストール方法
 次のURLでアプリをクローン
 ```
